@@ -42,6 +42,8 @@ import android.os.Bundle;
         .setTitle(arguments.getString(ARG_TITLE))
         .setMessage(arguments.getString(ARG_MESSAGE));
 
+    builder.setCancelable(false);
+
     if (arguments.containsKey(ARG_BUTTON_POSITIVE)) {
       builder.setPositiveButton(arguments.getString(ARG_BUTTON_POSITIVE), fragment);
     }
