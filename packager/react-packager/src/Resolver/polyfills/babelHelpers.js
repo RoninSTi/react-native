@@ -17,6 +17,10 @@
 
 var babelHelpers = global.babelHelpers = {};
 
+babelHelpers.typeof = typeof Symbol === 'function' && typeof Symbol.iterator === 'symbol' ? obj => typeof obj : obj => {
+	return obj && typeof Symbol === 'function' && obj.constructor === Symbol ? 'symbol' : typeof obj;
+};
+
 babelHelpers.createRawReactElement = (function () {
   var REACT_ELEMENT_TYPE = typeof Symbol === "function" && Symbol.for && Symbol.for("react.element") || 0xeac7;
   return function createRawReactElement(type, key, props) {
