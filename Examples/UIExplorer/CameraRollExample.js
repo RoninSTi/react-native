@@ -136,6 +136,6 @@ exports.description = 'Example component that uses CameraRoll to list user\'s ph
 exports.examples = [
   {
     title: 'Photos',
-    render(): ReactElement { return <CameraRollExample />; }
+    render(): React.Element { return <CameraRollExample />; }
   }
 ];

@@ -23,7 +23,7 @@ var StaticRenderer = React.createClass({
     return nextProps.shouldUpdate;
   },
 
-  render: function(): ReactElement {
+  render: function(): React.Element {
     return this.props.render();
   },
 });

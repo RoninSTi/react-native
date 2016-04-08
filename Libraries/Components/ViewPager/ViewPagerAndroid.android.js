@@ -131,7 +131,7 @@ var ViewPagerAndroid = React.createClass({
     }
   },
 
-  getInnerViewNode: function(): ReactComponent {
+  getInnerViewNode: function(): React.Component {
     return this.refs[VIEWPAGER_REF].getInnerViewNode();
   },
 

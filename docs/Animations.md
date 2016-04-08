@@ -30,7 +30,7 @@ class Playground extends React.Component {
       bounceValue: new Animated.Value(0),
     };
   }
-  render(): ReactElement {
+  render(): React.Element {
     return (
       <Animated.Image                         // Base: Image, Text, View
         source={{uri: 'http://i.imgur.com/XMKOH81.jpg'}}
@@ -282,7 +282,7 @@ class App extends React.Component {
     this.state = { w: 100, h: 100 };
     this._onPress = this._onPress.bind(this);
   }
-  
+
   componentWillMount() {
     // Animate creation
     LayoutAnimation.spring();

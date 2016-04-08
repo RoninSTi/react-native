@@ -37,7 +37,7 @@ const {
 } = React;
 
 type Props = {
-  children: ReactElement;
+  children: React.Element;
   style: any;
   textStyle: any;
 }

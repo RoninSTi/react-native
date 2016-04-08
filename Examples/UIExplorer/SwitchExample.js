@@ -128,26 +128,26 @@ var EventSwitchExample = React.createClass({
 var examples = [
   {
     title: 'Switches can be set to true or false',
-    render(): ReactElement { return <BasicSwitchExample />; }
+    render(): React.Element { return <BasicSwitchExample />; }
   },
   {
     title: 'Switches can be disabled',
-    render(): ReactElement { return <DisabledSwitchExample />; }
+    render(): React.Element { return <DisabledSwitchExample />; }
   },
   {
     title: 'Change events can be detected',
-    render(): ReactElement { return <EventSwitchExample />; }
+    render(): React.Element { return <EventSwitchExample />; }
   },
   {
     title: 'Switches are controlled components',
-    render(): ReactElement { return <Switch />; }
+    render(): React.Element { return <Switch />; }
   }
 ];
 
 if (React.Platform.OS === 'ios') {
   examples.push({
     title: 'Custom colors can be provided',
-    render(): ReactElement { return <ColorSwitchExample />; }
+    render(): React.Element { return <ColorSwitchExample />; }
   });
 }
 

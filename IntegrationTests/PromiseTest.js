@@ -63,7 +63,7 @@ var PromiseTest = React.createClass({
     }
   },
 
-  render() : ReactElement {
+  render() : React.Element {
     return <React.View />;
   }
 

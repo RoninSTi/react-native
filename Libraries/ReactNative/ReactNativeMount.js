@@ -11,6 +11,7 @@
  */
 'use strict';
 
+var React = require('React');
 var ReactElement = require('ReactElement');
 var ReactNativeTagHandles = require('ReactNativeTagHandles');
 var ReactPerf = require('ReactPerf');
@@ -105,10 +106,10 @@ var ReactNativeMount = {
    * @param {containerTag} containerView Handle to native view tag
    */
   renderComponent: function(
-    nextElement: ReactElement,
+    nextElement: React.Element,
     containerTag: number,
     callback?: ?(() => void)
-  ): ?ReactComponent {
+  ): ?React.Component {
     var nextWrappedElement = new ReactElement(
       TopLevelWrapper,
       null,
@@ -242,7 +243,7 @@ var ReactNativeMount = {
    * @see {ReactNativeMount.unmountComponentAtNode}
    */
   unmountComponentFromNode: function(
-    instance: ReactComponent,
+    instance: React.Component,
     containerID: string
   ) {
     // Call back into native to remove all of the subviews from this container

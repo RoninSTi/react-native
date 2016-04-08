@@ -11,6 +11,7 @@
  */
 'use strict';
 
+const React = require('React');
 const Animated = require('Animated');
 
 // Object Instances
@@ -97,7 +98,7 @@ export type NavigationAnimationSetter = (
 export type NavigationRenderer = (
   navigationState: ?NavigationState,
   onNavigate: NavigationActionCaller,
-) => ReactElement;
+) => React.Element;
 
 export type NavigationReducer = (
   state: ?NavigationState,
@@ -106,7 +107,7 @@ export type NavigationReducer = (
 
 export type NavigationSceneRenderer = (
   props: NavigationSceneRendererProps,
-) => ?ReactElement;
+) => ?React.Element;
 
 export type NavigationStyleInterpolator = (
   props: NavigationSceneRendererProps,

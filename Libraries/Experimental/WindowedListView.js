@@ -90,15 +90,15 @@ type Props = {
    */
   renderRow: (
     data: mixed, sectionIdx: number, rowIdx: number, key: string
-  ) => ?ReactElement;
+  ) => ?React.Element;
   /**
    * Rendered when the list is scrolled faster than rows can be rendered.
    */
-  renderWindowBoundaryIndicator?: () => ?ReactElement;
+  renderWindowBoundaryIndicator?: () => ?React.Element;
   /**
    * Always rendered at the bottom of all the rows.
    */
-  renderFooter?: () => ?ReactElement;
+  renderFooter?: () => ?React.Element;
   /**
    * Pipes through normal onScroll events from the underlying `ScrollView`.
    */
@@ -145,7 +145,7 @@ type Props = {
    * A function that returns the scrollable component in which the list rows
    * are rendered. Defaults to returning a ScrollView with the given props.
    */
-  renderScrollComponent: (props: ?Object) => ReactElement;
+  renderScrollComponent: (props: ?Object) => React.Element;
   /**
    * Use to disable incremental rendering when not wanted, e.g. to speed up initial render.
    */
@@ -203,7 +203,7 @@ class WindowedListView extends React.Component {
       lastVisible: -1,
     };
   }
-  getScrollResponder(): ?ReactComponent {
+  getScrollResponder(): ?React.Component {
     return this._scrollRef &&
       this._scrollRef.getScrollResponder &&
       this._scrollRef.getScrollResponder();
@@ -392,7 +392,7 @@ class WindowedListView extends React.Component {
       });
     }
   }
-  render(): ReactElement {
+  render(): React.Element {
     const firstRow = this.state.firstRow;
     const lastRow = this.state.lastRow;
     const rowFrames = this._rowFrames;
@@ -507,7 +507,7 @@ type CellProps = {
   /**
    * Renders the actual row contents.
    */
-  renderRow: (data: mixed, sectionIdx: number, rowIdx: number) => ?ReactElement;
+  renderRow: (data: mixed, sectionIdx: number, rowIdx: number) => ?React.Element;
   /**
    * Index of the row, passed through to other callbacks.
    */

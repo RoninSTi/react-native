@@ -44,7 +44,7 @@ class AnExSet extends React.Component {
       openColor: randColor(),
     };
   }
-  render(): ReactElement {
+  render(): React.Element {
     var backgroundColor = this.props.openVal ?
       this.props.openVal.interpolate({
         inputRange: [0, 1],

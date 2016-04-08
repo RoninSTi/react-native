@@ -109,7 +109,7 @@ class NavigationView extends React.Component<any, Props, any> {
     this._onLayout = this._onLayout.bind(this);
   }
 
-  render(): ReactElement {
+  render(): React.Element {
     const {
       navigationState,
       onNavigate
@@ -137,7 +137,7 @@ class NavigationView extends React.Component<any, Props, any> {
     );
   }
 
-  _renderScene(props: NavigationSceneRendererProps): ?ReactElement {
+  _renderScene(props: NavigationSceneRendererProps): ?React.Element {
 
     const child = this.props.renderScene(props);
     if (child === null) {

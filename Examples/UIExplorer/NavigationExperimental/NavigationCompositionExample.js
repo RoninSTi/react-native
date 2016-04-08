@@ -281,7 +281,7 @@ class ExampleMainView extends React.Component {
     );
   }
 
-  _renderScene(props: NavigationSceneRendererProps): ReactElement {
+  _renderScene(props: NavigationSceneRendererProps): React.Element {
     const {scene} = props;
     return (
       <ExampleTabScreen

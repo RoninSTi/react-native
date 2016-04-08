@@ -231,7 +231,7 @@ class NavigationLegacyNavigator extends React.Component<any, Props, State> {
     this._didFocus();
   }
 
-  render(): ReactElement {
+  render(): React.Element {
     return (
       <NavigationAnimatedView
         applyAnimation={this._applyAnimation}
@@ -253,7 +253,7 @@ class NavigationLegacyNavigator extends React.Component<any, Props, State> {
     return new RouteStack(index, routes);
   }
 
-  _renderHeader(props: NavigationSceneRendererProps): ?ReactElement {
+  _renderHeader(props: NavigationSceneRendererProps): ?React.Element {
     // `_renderHeader` is always called before `_renderCard`. We should
     // subscribe to the position here.
     this._positionListener && this._positionListener.remove();
@@ -278,7 +278,7 @@ class NavigationLegacyNavigator extends React.Component<any, Props, State> {
     );
   }
 
-  _renderCard(props: NavigationSceneRendererProps): ReactElement {
+  _renderCard(props: NavigationSceneRendererProps): React.Element {
     const {scene} = props;
     const {configureScene} = this.props;
 
@@ -325,7 +325,7 @@ class NavigationLegacyNavigator extends React.Component<any, Props, State> {
     );
   }
 
-  _renderScene(props: NavigationSceneRendererProps): ReactElement {
+  _renderScene(props: NavigationSceneRendererProps): React.Element {
     const {navigationState} = props.scene;
     const route = RouteStack.getRouteByNavigationState(navigationState);
     return this.props.renderScene(route, this);

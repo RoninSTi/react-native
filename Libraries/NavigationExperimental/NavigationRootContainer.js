@@ -95,6 +95,8 @@ class NavigationRootContainer extends React.Component<any, Props, State> {
     onNavigate: PropTypes.func,
   };
 
+  static getBackAction =  getBackAction;
+
   constructor(props: Props) {
     super(props);
 
@@ -174,7 +176,7 @@ class NavigationRootContainer extends React.Component<any, Props, State> {
     return true;
   }
 
-  render(): ReactElement {
+  render(): React.Element {
     const navigation = this.props.renderNavigation(
       this.state.navState,
       this.handleNavigation
@@ -182,7 +184,5 @@ class NavigationRootContainer extends React.Component<any, Props, State> {
     return navigation;
   }
 }
-
-NavigationRootContainer.getBackAction = getBackAction;
 
 module.exports = NavigationRootContainer;

@@ -48,22 +48,7 @@
 # Ignore BUCK generated folders
 .*\.buckd/
 
-.*/node_modules/is-my-json-valid/test/.*\.json
-.*/node_modules/iconv-lite/encodings/tables/.*\.json
 .*/node_modules/y18n/test/.*\.json
-.*/node_modules/spdx-license-ids/spdx-license-ids.json
-.*/node_modules/spdx-exceptions/index.json
-.*/node_modules/resolve/test/subdirs/node_modules/a/b/c/x.json
-.*/node_modules/resolve/lib/core.json
-.*/node_modules/jsonparse/samplejson/.*\.json
-.*/node_modules/json5/test/.*\.json
-.*/node_modules/ua-parser-js/test/.*\.json
-.*/node_modules/builtin-modules/builtin-modules.json
-.*/node_modules/binary-extensions/binary-extensions.json
-.*/node_modules/url-regex/tlds.json
-.*/node_modules/joi/.*\.json
-.*/node_modules/isemail/.*\.json
-.*/node_modules/tr46/.*\.json
 
 
 [include]

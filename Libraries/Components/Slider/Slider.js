@@ -159,7 +159,7 @@ var Slider = React.createClass({
       onSlidingComplete && onSlidingComplete(event.nativeEvent.value);
     });
 
-    return <RCTSlider 
+    return <RCTSlider
       {...props}
       enabled={!this.props.disabled}
       onStartShouldSetResponder={() => true}

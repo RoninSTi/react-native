@@ -109,7 +109,7 @@ class NavigationCardStack extends React.Component {
     );
   }
 
-  render(): ReactElement {
+  render(): React.Element {
     return (
       <NavigationAnimatedView
         navigationState={this.props.navigationState}
@@ -120,7 +120,7 @@ class NavigationCardStack extends React.Component {
     );
   }
 
-  _renderScene(props: NavigationSceneRendererProps): ReactElement {
+  _renderScene(props: NavigationSceneRendererProps): React.Element {
     const isVertical = this.props.direction === 'vertical';
 
     const style = isVertical ?

@@ -37,7 +37,7 @@ exports.examples = [{
 },
 {
   title: 'Prompt Options',
-  render(): ReactElement {
+  render(): React.Element {
     return <PromptOptions />;
   }
 },
@@ -87,11 +87,11 @@ exports.examples = [{
 class PromptOptions extends React.Component {
   state: any;
   customButtons: Array<Object>;
+  saveResponse: Function;
 
   constructor(props) {
     super(props);
 
-    // $FlowFixMe this seems to be a Flow bug, `saveResponse` is defined below
     this.saveResponse = this.saveResponse.bind(this);
 
     this.customButtons = [{

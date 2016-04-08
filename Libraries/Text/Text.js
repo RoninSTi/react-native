@@ -137,7 +137,7 @@ const Text = React.createClass({
   touchableHandleActivePressOut: (null: ?Function),
   touchableHandlePress: (null: ?Function),
   touchableGetPressRectOffset: (null: ?Function),
-  render(): ReactElement {
+  render(): React.Element {
     let newProps = this.props;
     if (this.props.onStartShouldSetResponder || this.props.onPress) {
       if (!this._handlers) {

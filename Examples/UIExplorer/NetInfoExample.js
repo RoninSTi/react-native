@@ -161,22 +161,22 @@ exports.examples = [
   {
     title: 'NetInfo.isConnected',
     description: 'Asynchronously load and observe connectivity',
-    render(): ReactElement { return <IsConnected />; }
+    render(): React.Element { return <IsConnected />; }
   },
   {
     title: 'NetInfo.update',
     description: 'Asynchronously load and observe connectionInfo',
-    render(): ReactElement { return <ConnectionInfoCurrent />; }
+    render(): React.Element { return <ConnectionInfoCurrent />; }
   },
   {
     title: 'NetInfo.updateHistory',
     description: 'Observed updates to connectionInfo',
-    render(): ReactElement { return <ConnectionInfoSubscription />; }
+    render(): React.Element { return <ConnectionInfoSubscription />; }
   },
   {
     platform: 'android',
     title: 'NetInfo.isConnectionExpensive (Android)',
     description: 'Asynchronously check isConnectionExpensive',
-    render(): ReactElement { return <IsConnectionExpensive />; }
+    render(): React.Element { return <IsConnectionExpensive />; }
   },
 ];

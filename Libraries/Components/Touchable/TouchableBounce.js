@@ -125,7 +125,7 @@ var TouchableBounce = React.createClass({
     return 0;
   },
 
-  render: function(): ReactElement {
+  render: function(): React.Element {
     return (
       <Animated.View
         style={[{transform: [{scale: this.state.scale}]}, this.props.style]}

@@ -11,6 +11,8 @@
  */
 'use strict';
 
+var React = require('React');
+
 // Require ReactNativeDefaultInjection first for its side effects of setting up
 // the JS environment
 var ReactNativeDefaultInjection = require('ReactNativeDefaultInjection');
@@ -55,7 +57,7 @@ var resolveDefaultProps = function(element) {
 };
 
 // Experimental optimized element creation
-var augmentElement = function(element: ReactElement): ReactElement {
+var augmentElement = function(element: React.Element): React.Element {
   if (__DEV__) {
     invariant(
       false,
@@ -71,14 +73,14 @@ var augmentElement = function(element: ReactElement): ReactElement {
 };
 
 var render = function(
-  element: ReactElement,
+  element: React.Element,
   mountInto: number,
   callback?: ?(() => void)
-): ?ReactComponent {
+): ?React.Component {
   return ReactNativeMount.renderComponent(element, mountInto, callback);
 };
 
-var ReactNative = {
+var ReactNative: React = {
   hasReactNativeInitialized: false,
   Children: {
     map: ReactChildren.map,
@@ -87,7 +89,7 @@ var ReactNative = {
     toArray: ReactChildren.toArray,
     only: onlyChild
   },
-  Component: ReactComponent,
+  Component: React.Component,
   PropTypes: ReactPropTypes,
   createClass: ReactClass.createClass,
   createElement: createElement,
@@ -111,10 +113,10 @@ var ReactNative = {
 
   // Deprecations (remove for 0.13)
   renderComponent: function(
-    element: ReactElement,
+    element: React.Element,
     mountInto: number,
     callback?: ?(() => void)
-  ): ?ReactComponent {
+  ): ?React.Component {
     warning('Use React.render instead of React.renderComponent');
     return ReactNative.render(element, mountInto, callback);
   },

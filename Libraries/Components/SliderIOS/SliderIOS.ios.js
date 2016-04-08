@@ -130,7 +130,7 @@ var SliderIOS = React.createClass({
       'SliderIOS is deprecated and will be removed in ' +
       'future versions of React Native. Use the cross-platform Slider ' +
       'as a drop-in replacement.');
-    
+
     let {style, onValueChange, onSlidingComplete, ...props} = this.props;
     props.style = [styles.slider, style];
 

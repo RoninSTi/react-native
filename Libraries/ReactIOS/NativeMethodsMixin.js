@@ -11,6 +11,7 @@
  */
 'use strict';
 
+var React = require('React');
 var ReactNativeAttributePayload = require('ReactNativeAttributePayload');
 var TextInputState = require('TextInputState');
 var UIManager = require('UIManager');
@@ -207,7 +208,7 @@ if (__DEV__) {
  * In the future, we should cleanup callbacks by cancelling them instead of
  * using this.
  */
-var mountSafeCallback = function(context: ReactComponent, callback: ?Function): any {
+var mountSafeCallback = function(context: React.Component, callback: ?Function): any {
   return function() {
     if (!callback || (context.isMounted && !context.isMounted())) {
       return;

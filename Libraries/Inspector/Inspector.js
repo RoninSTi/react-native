@@ -26,8 +26,22 @@ if (window.__REACT_DEVTOOLS_GLOBAL_HOOK__) {
   window.__REACT_DEVTOOLS_GLOBAL_HOOK__.resolveRNStyle = require('flattenStyle');
 }
 
-class Inspector extends React.Component {
+type State = {
+  devtoolsAgent: ?Object;
+  panelPos: 'top' | 'bottom';
+  inspecting: boolean;
+  perfing: boolean;
+  hierarchy: Array<any>;
+  selection?: Object;
+  inspected: ?{
+    frame: any;
+    style: any;
+  };
+}
+
+class Inspector extends React.Component<void, Object, State> {
   _subs: ?Array<() => void>;
+  state: State;
 
   constructor(props: Object) {
     super(props);
@@ -38,6 +52,7 @@ class Inspector extends React.Component {
       inspecting: true,
       perfing: false,
       inspected: null,
+      hierarchy: [],
     };
   }
 
@@ -155,7 +170,10 @@ class Inspector extends React.Component {
         {this.state.inspecting &&
           <InspectorOverlay
             rootTag={this.props.rootTag}
-            inspected={this.state.inspected}
+            inspected={
+              /* $FlowFixMe - This is not a required prop */
+              this.state.inspected
+            }
             inspectedViewTag={this.props.inspectedViewTag}
             onTouchInstance={this.onTouchInstance.bind(this)}
           />}

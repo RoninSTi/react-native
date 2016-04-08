@@ -342,11 +342,11 @@ exports.examples = [
   },
   {
     title: 'Blur on submit',
-    render: function(): ReactElement { return <BlurOnSubmitExample />; },
+    render: function(): React.Element { return <BlurOnSubmitExample />; },
   },
   {
     title: 'Event handling',
-    render: function(): ReactElement { return <TextEventsExample />; },
+    render: function(): React.Element { return <TextEventsExample />; },
   },
   {
     title: 'Colors and text inputs',

@@ -79,7 +79,7 @@ class NavigationCard extends React.Component<any, Props, any> {
     );
   }
 
-  render(): ReactElement {
+  render(): React.Element {
     const {
       panHandlers,
       renderScene,

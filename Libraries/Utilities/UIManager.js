@@ -11,6 +11,7 @@
  */
 'use strict';
 
+var React = require('React');
 var UIManager = require('NativeModules').UIManager;
 var findNodeHandle = require('findNodeHandle');
 
@@ -63,7 +64,7 @@ const _takeSnapshot = UIManager.takeSnapshot;
  * @platform ios
  */
 UIManager.takeSnapshot = async function(
-  view ?: 'window' | ReactElement | number,
+  view ?: 'window' | React.Element | number,
   options ?: {
     width ?: number;
     height ?: number;

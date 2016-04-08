@@ -148,7 +148,7 @@ class NavigationAnimatedView
     }
   }
 
-  render(): ReactElement {
+  render(): React.Element {
     const overlay = this._renderOverlay();
     const scenes = this._renderScenes();
     return (
@@ -163,11 +163,11 @@ class NavigationAnimatedView
     );
   }
 
-  _renderScenes(): Array<?ReactElement> {
+  _renderScenes(): Array<?React.Element> {
     return this.state.scenes.map(this._renderScene, this);
   }
 
-  _renderScene(scene: NavigationScene): ?ReactElement {
+  _renderScene(scene: NavigationScene): ?React.Element {
     const {
       navigationState,
       onNavigate,
@@ -189,7 +189,7 @@ class NavigationAnimatedView
     });
   }
 
-  _renderOverlay(): ?ReactElement {
+  _renderOverlay(): ?React.Element {
     if (this.props.renderOverlay) {
       const {
         navigationState,

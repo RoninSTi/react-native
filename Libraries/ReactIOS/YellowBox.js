@@ -180,6 +180,7 @@ class YellowBox extends React.Component {
     warningMap: Map;
   };
   _listener: ?EmitterSubscription;
+  dismissWarning: Function;
 
   constructor(props: mixed, context: mixed) {
     super(props, context);

@@ -14,7 +14,8 @@
 type FormDataValue = any;
 type FormDataNameValuePair = [string, FormDataValue];
 
-type Headers = {[name: string]: string};
+type Headers = { [key: string]: string; };
+
 type FormDataPart = {
   string: string;
   headers: Headers;
@@ -65,8 +66,8 @@ class FormData {
     return this._parts.map(([name, value]) => {
       var contentDisposition = 'form-data; name="' + name + '"';
 
-      /* $FlowIssue(>=0.20.1) #9463928 */
-      var headers: Headers = {'content-disposition': contentDisposition};
+      /* $FlowIssue #9463928 */
+      var headers: Headers = { 'content-disposition': contentDisposition };
 
       // The body part is a "blob", which in React Native just means
       // an object with a `uri` attribute. Optionally, it can also

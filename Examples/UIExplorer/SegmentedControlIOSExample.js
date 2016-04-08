@@ -144,26 +144,26 @@ exports.description = 'Native segmented control';
 exports.examples = [
   {
     title: 'Segmented controls can have values',
-    render(): ReactElement { return <BasicSegmentedControlExample />; }
+    render(): React.Element { return <BasicSegmentedControlExample />; }
   },
   {
     title: 'Segmented controls can have a pre-selected value',
-    render(): ReactElement { return <PreSelectedSegmentedControlExample />; }
+    render(): React.Element { return <PreSelectedSegmentedControlExample />; }
   },
   {
     title: 'Segmented controls can be momentary',
-    render(): ReactElement { return <MomentarySegmentedControlExample />; }
+    render(): React.Element { return <MomentarySegmentedControlExample />; }
   },
   {
     title: 'Segmented controls can be disabled',
-    render(): ReactElement { return <DisabledSegmentedControlExample />; }
+    render(): React.Element { return <DisabledSegmentedControlExample />; }
   },
   {
     title: 'Custom colors can be provided',
-    render(): ReactElement { return <ColorSegmentedControlExample />; }
+    render(): React.Element { return <ColorSegmentedControlExample />; }
   },
   {
     title: 'Change events can be detected',
-    render(): ReactElement { return <EventSegmentedControlExample />; }
+    render(): React.Element { return <EventSegmentedControlExample />; }
   }
 ];

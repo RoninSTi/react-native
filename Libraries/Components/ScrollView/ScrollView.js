@@ -353,7 +353,7 @@ var ScrollView = React.createClass({
    * implement this method so that they can be composed while providing access
    * to the underlying scroll responder's methods.
    */
-  getScrollResponder: function(): ReactComponent {
+  getScrollResponder: function(): React.Component {
     return this;
   },
 
@@ -385,7 +385,6 @@ var ScrollView = React.createClass({
     } else {
       ({x, y, animated} = y || {});
     }
-    // $FlowFixMe - Don't know how to pass Mixin correctly. Postpone for now
     this.getScrollResponder().scrollResponderScrollTo({x: x || 0, y: y || 0, animated: animated !== false});
   },
 

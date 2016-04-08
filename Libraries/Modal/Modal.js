@@ -34,7 +34,7 @@ var RCTModalHostView = requireNativeComponent('RCTModalHostView', null);
  * configureScene property.
  */
 class Modal extends React.Component {
-  render(): ?ReactElement {
+  render(): ?React.Element {
     if (this.props.visible === false) {
       return null;
     }

@@ -197,27 +197,27 @@ exports.description = 'Interface to show iOS\' action sheets';
 exports.examples = [
   {
     title: 'Show Action Sheet',
-    render(): ReactElement { return <ActionSheetExample />; }
+    render(): React.Element { return <ActionSheetExample />; }
   },
   {
     title: 'Show Action Sheet with tinted buttons',
-    render(): ReactElement { return <ActionSheetTintExample />; }
+    render(): React.Element { return <ActionSheetTintExample />; }
   },
   {
     title: 'Show Share Action Sheet',
-    render(): ReactElement {
+    render(): React.Element {
       return <ShareActionSheetExample url="https://code.facebook.com" />;
     }
   },
   {
     title: 'Share Local Image',
-    render(): ReactElement {
+    render(): React.Element {
       return <ShareActionSheetExample url="bunny.png" />;
     }
   },
   {
     title: 'Share Screenshot',
-    render(): ReactElement {
+    render(): React.Element {
       return <ShareScreenshotExample />;
     }
   }

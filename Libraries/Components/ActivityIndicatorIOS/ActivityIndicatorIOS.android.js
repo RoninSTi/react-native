@@ -14,7 +14,7 @@ var React = require('React');
 var View = require('View');
 
 var ActivityIndicatorIOS = React.createClass({
-  render(): ReactElement {
+  render(): React.Element {
     return <View {...this.props} />;
   }
 });

@@ -222,12 +222,13 @@ const NetInfo = {
       eventName: ChangeEventName,
       handler: Function
     ): void {
-      /* $FlowFixMe */
       const listener = _isConnectedSubscriptions.get(handler);
-      NetInfo.removeEventListener(
-        eventName,
-        listener
-      );
+      if (listener) {
+          NetInfo.removeEventListener(
+          eventName,
+          listener
+        );
+      }
       _isConnectedSubscriptions.delete(handler);
     },
 

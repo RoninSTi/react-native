@@ -16,7 +16,7 @@
  */
 'use strict';
 
-var React = require('react');
+var React = require('React');
 var ReactNative = require('react-native');
 var {
   ScrollView,

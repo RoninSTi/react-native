@@ -75,6 +75,10 @@ const {PropTypes} = React;
 class NavigationHeader extends React.Component<DefaultProps, Props, any> {
   props: Props;
 
+  static HEIGHT: number;
+  static Title: React.Component;
+  static BackButton: React.Component;
+
   static defaultProps = {
 
     renderTitleComponent: (props: NavigationSceneRendererProps) => {
@@ -108,7 +112,7 @@ class NavigationHeader extends React.Component<DefaultProps, Props, any> {
     );
   }
 
-  render(): ReactElement {
+  render(): React.Element {
     const { scenes, style } = this.props;
 
     const scenesProps = scenes.map(scene => {
@@ -126,7 +130,7 @@ class NavigationHeader extends React.Component<DefaultProps, Props, any> {
     );
   }
 
-  _renderLeft(props: NavigationSceneRendererProps): ?ReactElement {
+  _renderLeft(props: NavigationSceneRendererProps): ?React.Element {
     return this._renderSubView(
       props,
       'left',
@@ -135,7 +139,7 @@ class NavigationHeader extends React.Component<DefaultProps, Props, any> {
     );
   }
 
-  _renderTitle(props: NavigationSceneRendererProps): ?ReactElement {
+  _renderTitle(props: NavigationSceneRendererProps): ?React.Element {
     return this._renderSubView(
       props,
       'title',
@@ -144,7 +148,7 @@ class NavigationHeader extends React.Component<DefaultProps, Props, any> {
     );
   }
 
-  _renderRight(props: NavigationSceneRendererProps): ?ReactElement {
+  _renderRight(props: NavigationSceneRendererProps): ?React.Element {
     return this._renderSubView(
       props,
       'right',
@@ -158,7 +162,7 @@ class NavigationHeader extends React.Component<DefaultProps, Props, any> {
     name: SubViewName,
     renderer: NavigationSceneRenderer,
     styleInterpolator: NavigationStyleInterpolator,
-  ): ?ReactElement {
+  ): ?React.Element {
     const {
       scene,
       navigationState,
