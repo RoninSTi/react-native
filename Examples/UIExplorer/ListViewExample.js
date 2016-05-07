@@ -20,11 +20,10 @@ var ReactNative = require('react-native');
 var {
   Image,
   ListView,
-  TouchableHighlight,
   StyleSheet,
-  RecyclerViewBackedScrollView,
   Text,
   View,
+  InteractionManager,
 } = ReactNative;
 
 var UIExplorerPage = require('./UIExplorerPage');
@@ -37,8 +36,10 @@ var ListViewSimpleExample = React.createClass({
 
   getInitialState: function() {
     var ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    var data = this._genRows(0, 500);
     return {
-      dataSource: ds.cloneWithRows(this._genRows({})),
+      data,
+      dataSource: ds.cloneWithRows(data),
     };
   },
 
@@ -55,9 +56,10 @@ var ListViewSimpleExample = React.createClass({
         noSpacer={true}
         noScroll={true}>
         <ListView
+          pageSize={1}
           dataSource={this.state.dataSource}
+          onEndReached={this._onEndReached}
           renderRow={this._renderRow}
-          renderScrollComponent={props => <RecyclerViewBackedScrollView {...props} />}
           renderSeparator={(sectionID, rowID) => <View key={`${sectionID}-${rowID}`} style={styles.separator} />}
         />
       </UIExplorerPage>
@@ -68,34 +70,37 @@ var ListViewSimpleExample = React.createClass({
     var rowHash = Math.abs(hashCode(rowData));
     var imgSource = THUMB_URLS[rowHash % THUMB_URLS.length];
     return (
-      <TouchableHighlight onPress={() => this._pressRow(rowID)}>
-        <View>
-          <View style={styles.row}>
-            <Image style={styles.thumb} source={imgSource} />
-            <Text style={styles.text}>
-              {rowData + ' - ' + LOREM_IPSUM.substr(0, rowHash % 301 + 10)}
-            </Text>
-          </View>
+      <View>
+        <View style={styles.row}>
+          <Image style={styles.thumb} source={imgSource} />
+          <Text style={styles.text}>
+            {rowData + ' - ' + LOREM_IPSUM.substr(0, rowHash % 301 + 10)}
+          </Text>
         </View>
-      </TouchableHighlight>
+      </View>
     );
   },
 
-  _genRows: function(pressData: {[key: number]: boolean}): Array<string> {
+  _onEndReached: function() {
+    var rows = this._genRows(this.state.data.length, 20);
+    var data = [].concat(this.state.data, rows);
+
+    InteractionManager.runAfterInteractions(() => {
+      this.setState({
+        data,
+        dataSource: this.state.dataSource.cloneWithRows(data),
+      });
+    });
+  },
+
+  _genRows: function(initial: number, count: number): Array<string> {
     var dataBlob = [];
-    for (var ii = 0; ii < 100; ii++) {
-      var pressedText = pressData[ii] ? ' (pressed)' : '';
-      dataBlob.push('Row ' + ii + pressedText);
+    for (var ii = 0; ii < count; ii++) {
+      dataBlob.push('Row ' + (initial + ii));
     }
     return dataBlob;
   },
 
-  _pressRow: function(rowID: number) {
-    this._pressData[rowID] = !this._pressData[rowID];
-    this.setState({dataSource: this.state.dataSource.cloneWithRows(
-      this._genRows(this._pressData)
-    )});
-  },
 });
 
 var THUMB_URLS = [
