@@ -10,7 +10,11 @@
 package com.facebook.react.views.scroll;
 
 import android.content.Context;
+import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Rect;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -40,6 +44,8 @@ public class ReactScrollView extends NestedScrollView implements ReactClippingVi
   private boolean mRemoveClippedSubviews;
   private boolean mScrollEnabled = true;
   private boolean mSendMomentumEvents;
+  private @Nullable Drawable mEndBackground;
+  private int mEndFillColor = Color.TRANSPARENT;
 
   public ReactScrollView(Context context) {
     super(context);
@@ -184,6 +190,25 @@ public class ReactScrollView extends NestedScrollView implements ReactClippingVi
         }
       };
       postOnAnimationDelayed(r, ReactScrollViewHelper.MOMENTUM_DELAY);
+    }
+  }
+
+  @Override
+  public void draw(Canvas canvas) {
+    if (mEndFillColor != Color.TRANSPARENT) {
+      final View content = getChildAt(0);
+      if (mEndBackground != null && content != null && content.getBottom() < getHeight()) {
+        mEndBackground.setBounds(0, content.getBottom(), getWidth(), getHeight());
+        mEndBackground.draw(canvas);
+      }
+    }
+    super.draw(canvas);
+  }
+
+  public void setEndFillColor(int color) {
+    if (color != mEndFillColor) {
+      mEndFillColor = color;
+      mEndBackground = new ColorDrawable(mEndFillColor);
     }
   }
 }

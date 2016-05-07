@@ -80,8 +80,7 @@ public class ReactScrollViewManager
    */
   @ReactProp(name = "endFillColor", defaultInt = Color.TRANSPARENT, customType = "Color")
   public void setBottomFillColor(ReactScrollView view, int color) {
-    // TODO
-    // view.setEndFillColor(color);
+     view.setEndFillColor(color);
   }
 
   @Override

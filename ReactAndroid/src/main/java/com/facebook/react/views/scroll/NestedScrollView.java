@@ -93,6 +93,7 @@ public class NestedScrollView extends FrameLayout implements NestedScrollingPare
      */
     private boolean mIsLayoutDirty = true;
     private boolean mIsLaidOut = false;
+    private boolean isFling = false;
 
     /**
      * The child to give focus to in the event that a child has requested focus while the
@@ -455,6 +456,16 @@ public class NestedScrollView extends FrameLayout implements NestedScrollingPare
     @Override
     protected void onScrollChanged(int l, int t, int oldl, int oldt) {
         super.onScrollChanged(l, t, oldl, oldt);
+
+        if (isFling) {
+            if (Math.abs(t - oldt) <= 3 || t == 0 || t == (getChildAt(0).getMeasuredHeight() - getMeasuredHeight())) {
+                isFling = false;
+
+                // This forces the mFinish variable in scroller to true
+                // http://stackoverflow.com/questions/31829976/onclick-method-not-working-properly-after-nestedscrollview-scrolled/32783524#32783524
+                mScroller.abortAnimation();
+            }
+        }
 
         if (mOnScrollChangeListener != null) {
             mOnScrollChangeListener.onScrollChange(this, l, t, oldl, oldt);
@@ -1682,6 +1693,9 @@ public class NestedScrollView extends FrameLayout implements NestedScrollingPare
                     Math.max(0, bottom - height), 0, height/2);
 
             ViewCompat.postInvalidateOnAnimation(this);
+
+            // Track fling action in onScrollChanged() method
+            isFling = true;
         }
     }
 
