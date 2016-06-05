@@ -66,7 +66,7 @@ var ListViewSimpleExample = React.createClass({
     );
   },
 
-  _renderRow: function(rowData: string, sectionID: number, rowID: number) {
+  _renderRow: function(rowData: string, sectionID: number, rowID: number, highlightRow: (sectionID: number, rowID: number) => void) {
     var rowHash = Math.abs(hashCode(rowData));
     var imgSource = THUMB_URLS[rowHash % THUMB_URLS.length];
     return (
@@ -100,7 +100,6 @@ var ListViewSimpleExample = React.createClass({
     }
     return dataBlob;
   },
-
 });
 
 var THUMB_URLS = [
@@ -134,10 +133,6 @@ var styles = StyleSheet.create({
     justifyContent: 'center',
     padding: 10,
     backgroundColor: '#F6F6F6',
-  },
-  separator: {
-    height: 1,
-    backgroundColor: '#CCCCCC',
   },
   thumb: {
     width: 64,
