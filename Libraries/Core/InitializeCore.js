@@ -173,6 +173,9 @@ defineProperty(global, 'Headers', () => require('fetch').Headers);
 defineProperty(global, 'Request', () => require('fetch').Request);
 defineProperty(global, 'Response', () => require('fetch').Response);
 defineProperty(global, 'WebSocket', () => require('WebSocket'));
+defineProperty(global, 'Blob', () => require('Blob'));
+defineProperty(global, 'File', () => require('File'));
+defineProperty(global, 'URL', () => require('URL'));
 
 // Set up Geolocation
 let navigator = global.navigator;

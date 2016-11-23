@@ -11,10 +11,6 @@ package com.facebook.react.modules.websocket;
 
 import android.util.Base64;
 
-import java.io.IOException;
-import java.lang.IllegalStateException;
-import javax.annotation.Nullable;
-
 import com.facebook.common.logging.FLog;
 import com.facebook.react.bridge.Arguments;
 import com.facebook.react.bridge.ReactApplicationContext;
@@ -28,8 +24,19 @@ import com.facebook.react.bridge.ReadableType;
 import com.facebook.react.bridge.WritableMap;
 import com.facebook.react.common.ReactConstants;
 import com.facebook.react.module.annotations.ReactModule;
+import com.facebook.react.modules.blob.BlobModule;
 import com.facebook.react.modules.core.DeviceEventManagerModule;
 import com.facebook.react.modules.network.ForwardingCookieHandler;
+
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
+
+import javax.annotation.Nullable;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -39,14 +46,6 @@ import okhttp3.ResponseBody;
 import okhttp3.ws.WebSocket;
 import okhttp3.ws.WebSocketCall;
 import okhttp3.ws.WebSocketListener;
-
-import java.net.URISyntaxException;
-import java.net.URI;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-
 import okio.Buffer;
 import okio.ByteString;
 
@@ -54,6 +53,7 @@ import okio.ByteString;
 public class WebSocketModule extends ReactContextBaseJavaModule {
 
   private final Map<Integer, WebSocket> mWebSocketConnections = new HashMap<>();
+  private final Map<Integer, Boolean> mBlobsEnabled = new HashMap<>();
 
   private ReactContext mReactContext;
   private ForwardingCookieHandler mCookieHandler;
@@ -66,8 +66,8 @@ public class WebSocketModule extends ReactContextBaseJavaModule {
 
   private void sendEvent(String eventName, WritableMap params) {
     mReactContext
-      .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
-      .emit(eventName, params);
+            .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
+            .emit(eventName, params);
   }
 
   @Override
@@ -77,19 +77,19 @@ public class WebSocketModule extends ReactContextBaseJavaModule {
 
   @ReactMethod
   public void connect(
-    final String url,
-    @Nullable final ReadableArray protocols,
-    @Nullable final ReadableMap headers,
-    final int id) {
+          final String url,
+          @Nullable final ReadableArray protocols,
+          @Nullable final ReadableMap headers,
+          final int id) {
     OkHttpClient client = new OkHttpClient.Builder()
-      .connectTimeout(10, TimeUnit.SECONDS)
-      .writeTimeout(10, TimeUnit.SECONDS)
-      .readTimeout(0, TimeUnit.MINUTES) // Disable timeouts for read
-      .build();
+            .connectTimeout(10, TimeUnit.SECONDS)
+            .writeTimeout(10, TimeUnit.SECONDS)
+            .readTimeout(0, TimeUnit.MINUTES) // Disable timeouts for read
+            .build();
 
     Request.Builder builder = new Request.Builder()
-        .tag(id)
-        .url(url);
+            .tag(id)
+            .url(url);
 
     String cookie = getCookie(url);
     if (cookie != null) {
@@ -109,8 +109,8 @@ public class WebSocketModule extends ReactContextBaseJavaModule {
           builder.addHeader(key, headers.getString(key));
         } else {
           FLog.w(
-            ReactConstants.TAG,
-            "Ignoring: requested " + key + ", value not a string");
+                  ReactConstants.TAG,
+                  "Ignoring: requested " + key + ", value not a string");
         }
       }
     } else {
@@ -162,30 +162,50 @@ public class WebSocketModule extends ReactContextBaseJavaModule {
 
       @Override
       public void onMessage(ResponseBody response) throws IOException {
-        String message;
-        try {
-          if (response.contentType() == WebSocket.BINARY) {
-            message = Base64.encodeToString(response.source().readByteArray(), Base64.NO_WRAP);
-          } else {
-            message = response.source().readUtf8();
+        WritableMap params = Arguments.createMap();
+        params.putInt("id", id);
+
+        if (mBlobsEnabled.containsKey(id) &&
+                mBlobsEnabled.get(id) &&
+                response.contentType() == WebSocket.BINARY) {
+          byte[] data;
+          try {
+            data = response.source().readByteArray();
+          } catch (IOException e) {
+            notifyWebSocketFailed(id, e.getMessage());
+            return;
           }
-        } catch (IOException e) {
-          notifyWebSocketFailed(id, e.getMessage());
-          return;
+          WritableMap blob = Arguments.createMap();
+          blob.putString("blobId", BlobModule.store(data));
+          blob.putInt("offset", 0);
+          blob.putInt("size", data.length);
+          params.putMap("data", blob);
+          params.putString("type", "blob");
+        } else {
+          String message;
+          try {
+            if (response.contentType() == WebSocket.BINARY) {
+              message = Base64.encodeToString(response.source().readByteArray(), Base64.NO_WRAP);
+            } else {
+              message = response.source().readUtf8();
+            }
+          } catch (IOException e) {
+            notifyWebSocketFailed(id, e.getMessage());
+            return;
+          }
+          params.putString("data", message);
+          params.putString("type", response.contentType() == WebSocket.BINARY ? "binary" : "text");
         }
+
         try {
           response.source().close();
         } catch (IOException e) {
           FLog.e(
-            ReactConstants.TAG,
-            "Could not close BufferedSource for WebSocket id " + id,
-            e);
+                  ReactConstants.TAG,
+                  "Could not close BufferedSource for WebSocket id " + id,
+                  e);
         }
 
-        WritableMap params = Arguments.createMap();
-        params.putInt("id", id);
-        params.putString("data", message);
-        params.putString("type", response.contentType() == WebSocket.BINARY ? "binary" : "text");
         sendEvent("websocketMessage", params);
       }
     });
@@ -205,11 +225,12 @@ public class WebSocketModule extends ReactContextBaseJavaModule {
     try {
       client.close(code, reason);
       mWebSocketConnections.remove(id);
+      mBlobsEnabled.remove(id);
     } catch (Exception e) {
       FLog.e(
-        ReactConstants.TAG,
-        "Could not close WebSocket connection for id " + id,
-        e);
+              ReactConstants.TAG,
+              "Could not close WebSocket connection for id " + id,
+              e);
     }
   }
 
@@ -236,7 +257,25 @@ public class WebSocketModule extends ReactContextBaseJavaModule {
     }
     try {
       client.sendMessage(
-        RequestBody.create(WebSocket.BINARY, ByteString.decodeBase64(base64String)));
+              RequestBody.create(WebSocket.BINARY, ByteString.decodeBase64(base64String)));
+    } catch (IOException | IllegalStateException e) {
+      notifyWebSocketFailed(id, e.getMessage());
+    }
+  }
+
+  @ReactMethod
+  public void sendBlob(ReadableMap blob, int id) {
+    WebSocket client = mWebSocketConnections.get(id);
+    if (client == null) {
+      // This is a programmer error
+      throw new RuntimeException("Cannot send a message. Unknown WebSocket id " + id);
+    }
+    byte[] data = BlobModule.resolve(
+            blob.getString("blobId"),
+            blob.getInt("offset"),
+            blob.getInt("size"));
+    try {
+      client.sendMessage(RequestBody.create(WebSocket.BINARY, data));
     } catch (IOException | IllegalStateException e) {
       notifyWebSocketFailed(id, e.getMessage());
     }
@@ -267,7 +306,7 @@ public class WebSocketModule extends ReactContextBaseJavaModule {
   /**
    * Get the default HTTP(S) origin for a specific WebSocket URI
    *
-   * @param String uri
+   * @param uri
    * @return A string of the endpoint converted to HTTP protocol (http[s]://host[:port])
    */
 
@@ -285,10 +324,10 @@ public class WebSocketModule extends ReactContextBaseJavaModule {
 
       if (requestURI.getPort() != -1) {
         defaultOrigin = String.format(
-          "%s://%s:%s",
-          scheme,
-          requestURI.getHost(),
-          requestURI.getPort());
+                "%s://%s:%s",
+                scheme,
+                requestURI.getHost(),
+                requestURI.getPort());
       } else {
         defaultOrigin = String.format("%s://%s/", scheme, requestURI.getHost());
       }
@@ -300,10 +339,15 @@ public class WebSocketModule extends ReactContextBaseJavaModule {
     }
   }
 
+  @ReactMethod
+  public void setBinaryType(String binaryType, int id) {
+    mBlobsEnabled.put(id, binaryType.equals("blob"));
+  }
+
   /**
    * Get the cookie for a specific domain
    *
-   * @param String uri
+   * @param uri
    * @return The cookie header or null if none is set
    */
   private String getCookie(String uri) {

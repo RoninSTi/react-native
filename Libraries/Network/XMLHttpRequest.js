@@ -377,6 +377,8 @@ class XMLHttpRequest extends EventTarget(...XHR_EVENTS) {
       this._requestId = null;
       this.setReadyState(this.DONE);
 
+      console.log(this);
+
       if (error) {
         XMLHttpRequest._interceptor && XMLHttpRequest._interceptor.loadingFailed(
           requestId,
@@ -483,8 +485,11 @@ class XMLHttpRequest extends EventTarget(...XHR_EVENTS) {
     ));
 
     let nativeResponseType = 'text';
-    if (this._responseType === 'arraybuffer' || this._responseType === 'blob') {
+    if (this._responseType === 'arraybuffer') {
       nativeResponseType = 'base64';
+    }
+    if (this._responseType === 'blob') {
+      nativeResponseType = 'blob';
     }
 
     invariant(this._method, 'Request method needs to be defined.');
