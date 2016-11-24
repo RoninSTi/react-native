@@ -26,7 +26,7 @@ class File extends Blob {
   static create(props: FileProps): File {
     const file = Blob.create(props);
 
-    Object.setProtoTypeOf(file, File.prototype);
+    Object.setPrototypeOf(file, File.prototype);
     Object.defineProperties(file, {
       name: {
         enumerable: true,

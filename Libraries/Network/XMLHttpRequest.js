@@ -233,7 +233,7 @@ class XMLHttpRequest extends EventTarget(...XHR_EVENTS) {
         break;
 
       case 'blob':
-        this._cachedResponse = new Blob(this._response);
+        this._cachedResponse = Blob.create(this._response);
         break;
 
       case 'json':
