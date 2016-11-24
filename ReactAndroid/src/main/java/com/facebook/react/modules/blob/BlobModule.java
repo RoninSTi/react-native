@@ -103,14 +103,14 @@ public class BlobModule extends ReactContextBaseJavaModule {
 
   @Nullable
   public static byte[] resolve(String blobId, int offset, int size) {
-    byte[] data = sBlobs.remove(blobId);
+    byte[] data = sBlobs.get(blobId);
     if (data == null){
       return null;
     }
     if (size == -1) {
       size = data.length - offset;
     }
-    if (offset > 0) {
+    if (offset >= 0) {
       data = Arrays.copyOfRange(data, offset, offset + size);
     }
     return data;

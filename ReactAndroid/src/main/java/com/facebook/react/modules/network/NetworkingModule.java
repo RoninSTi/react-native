@@ -25,7 +25,6 @@ import com.facebook.react.module.annotations.ReactModule;
 import com.facebook.react.modules.blob.BlobModule;
 import com.facebook.react.modules.core.DeviceEventManagerModule.RCTDeviceEventEmitter;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Reader;
@@ -294,7 +293,7 @@ public final class NetworkingModule extends ReactContextBaseJavaModule {
         data.getInt("size"));;
       requestBuilder.method(
               method,
-              RequestBodyUtil.create(MediaType.parse(contentType), new ByteArrayInputStream(bytes)));
+              RequestBody.create(MediaType.parse(contentType), bytes));
     } else if (data.hasKey(REQUEST_BODY_KEY_FORMDATA)) {
       if (contentType == null) {
         contentType = "multipart/form-data";
